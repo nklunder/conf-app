@@ -23,7 +23,7 @@ img {
 
 .container {
   margin: 0 auto;
-  width: 900px;
+  width: 90%;
 }
 
 .btn {
@@ -80,7 +80,7 @@ img {
   font-size: 8rem;
   padding: .1em .3em;
   margin: 0;
-  background-color: rgba(0, 0, 0, 0.9);
+  background-color: rgba(0, 0, 0, 0.8);
   border-radius: 4px;
 }
 
