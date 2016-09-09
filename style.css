@@ -48,7 +48,7 @@ img {
 }
 #fullscreen-toggle.fullscreen-active {
   background-image: url('img/fullscreen-exit.png');
-  opacity: .4;
+  opacity: .3;
 }
 #admin-toggle {
   background-image: url('img/admin-panel.png');
