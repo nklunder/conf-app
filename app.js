@@ -10,14 +10,15 @@ var codePool = [];
 var premiumCodeRefreshTime = null;
 
 // App Screens
+var appShell = document.getElementById('shell');
 var welcomeScreen = document.getElementById('section-welcome');
 var codeScreen = document.getElementById('section-locker-code');
 var dashboard = document.getElementById('section-dashboard')
 
 // UI Elements
 var codeDismissBtn = document.getElementById('code-dismiss-btn');
-var toggleFullscreen = document.getElementById('fullscreen-toggle');
-var toggleAdmin = document.getElementById('admin-toggle');
+var fullscreenBtn = document.getElementById('fullscreen-toggle');
+var adminBtn = document.getElementById('admin-toggle');
 var form = document.getElementById('locker-code-form');
 
 // Dynamic Outputs
@@ -92,14 +93,19 @@ function exitFullscreen() {
   if(document.exitFullscreen) {
     document.exitFullscreen();
   } else if(document.webkitExitFullscreen) {
-    document.webkitExitFullscreen();
   }
 }
 
-toggleFullscreen.addEventListener('click', function () {
-  launchIntoFullscreen(document.getElementById('container'));
-})
-var efsBtn = document.getElementById('efs');
-efsBtn.addEventListener('click', function () {
-  exitFullscreen();
-})
+function toggleFullscreen() {
+  if (document.webkitFullscreenElement) {
+    fullscreenBtn.classList.remove('fullscreen-active');
+    adminBtn.classList.remove('hidden');
+    document.webkitExitFullscreen();
+  } else {
+    fullscreenBtn.classList.add('fullscreen-active');
+    adminBtn.classList.add('hidden');
+    appShell.webkitRequestFullscreen();
+  }
+}
+
+fullscreenBtn.addEventListener('click', toggleFullscreen);

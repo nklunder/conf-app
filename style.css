@@ -31,7 +31,7 @@ img {
   z-index: 10000;
   position: absolute;
   top: 0;
-  left: 0;
+  right: 0;
 }
 .app-controls__toggle-btn {
   background-color: rgba(0, 0, 0, 0.2);
@@ -41,10 +41,14 @@ img {
   width: 60px;
   background-position: center;
   background-repeat: no-repeat;
-  background-size: 42px;
+  background-size: 38px;
+  opacity: .8;
 }
 #fullscreen-toggle {
   background-image: url('img/fullscreen-enter.png');
+}
+#fullscreen-toggle.fullscreen-active {
+  background-image: url('img/fullscreen-exit.png');
 }
 #admin-toggle {
   background-image: url('img/admin-panel.png');
