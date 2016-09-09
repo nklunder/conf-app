@@ -90,7 +90,7 @@ function launchIntoFullscreen(element) {
 function exitFullscreen() {
   if(document.exitFullscreen) {
     document.exitFullscreen();
-  } else if(document.mozCancelFullScreen) {
+  } else if(document.webkitExitFullscreen) {
     document.webkitExitFullscreen();
   }
 }
