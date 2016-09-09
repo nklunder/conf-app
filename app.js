@@ -80,18 +80,18 @@ function updateLocalStorage() {
 
 
 function toggleFullscreen() {
+  fullscreenBtn.classList.toggle('fullscreen-active');
+  adminBtn.classList.toggle('hidden');
+
   if (document.webkitFullscreenElement) {
-    fullscreenBtn.classList.remove('fullscreen-active');
-    adminBtn.classList.remove('hidden');
     document.webkitExitFullscreen();
   } else {
-    fullscreenBtn.classList.add('fullscreen-active');
-    adminBtn.classList.add('hidden');
     appShell.webkitRequestFullscreen();
   }
 }
 
 function toggleAdminPanel() {
+  fullscreenBtn.classList.toggle('hidden');
   adminPanel.classList.toggle('hidden');
   adminBtn.classList.toggle('admin-panel-open');
 }
