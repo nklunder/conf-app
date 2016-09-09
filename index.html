@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Amazon Trade-In</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="dashboard-trigger"></div>
+  <div class="container">
+    
+    <header class="header">
+      <img class="header__logo" src="trade-in-logo.png" alt="">
+    </header>
+
+    <div id="section-welcome">
+      <p class="intro-text">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Adipisci quidem minus maiores nihil aliquam quibusdam totam laborum voluptates, odio, illo expedita sequi, harum dignissimos molestias. Enim ut error, quam rem.</p>
+      <form id="locker-code-form">
+        <div class="input-group">
+          <input type="email" class="input-group__text-field" name="emailAddress" placeholder="email address" id="trade-in-email">
+          <input type="submit" class="btn btn--input-right" value="Submit">
+        </div>
+      </form>
+    </div>
+
+    <div id="section-locker-code" style="display: none;">
+      <div class="locker-code">
+        <p>
+          <span class="locker-code__text">LKR101</span>
+        </p>
+        <button class="btn" id="code-dismiss-btn">Done</button>
+      </div>
+    </div>
+
+    <div id="section-dashboard" style="display: none;">
+      <h1>Dashboard</h1>
+      <ul>
+        <li>email addresses</li>
+        <li>code history</li>
+        <li>etc</li>
+        <button id="dash-btn">TestingD</button>
+      </ul>
+    </div>
+
+  </div> <!-- end container -->
+
+  <script src="app.js"></script>
+</body>
+</html>
