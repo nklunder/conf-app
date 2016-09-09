@@ -4,11 +4,9 @@
 
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
-  /*background: url('bg-chalkboard.png') no-repeat center center fixed;
-  background-size: cover;*/
   color: #fff;
   font-size: 26px;
+  font-family: Arial, sans-serif;
 }
 
 img {
@@ -20,19 +18,45 @@ img {
 }
 
 .fullscreen-container {
-  background-color: #555;
+  position: relative;
   padding: 3rem;
   width: 1024px;
   height: 600px;
+  background: url('img/bg-chalkboard.png') no-repeat center center fixed;
+  background-color: #555;
+  background-size: cover;
+}
+
+.app-controls {
+  z-index: 10000;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.app-controls__toggle-btn {
+  background-color: rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  margin: .25em;
+  height: 60px;
+  width: 60px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: 42px;
+}
+#fullscreen-toggle {
+  background-image: url('img/fullscreen-enter.png');
+}
+#admin-toggle {
+  background-image: url('img/admin-panel.png');
 }
 
 .btn {
-  font-size: 1rem;
   padding: .25em .5em;
   border-width: 0;
   border-radius: 4px;
   background-color: #fcaf1e;
   color: #111;
+  font-size: 1rem;
 }
 .btn:hover,
 .btn:active {
@@ -43,8 +67,8 @@ img {
   font-size: 2rem;
 }
 .header {
-  text-align: center;
   margin-bottom: 2.8rem;
+  text-align: center;
 }
 .header__logo {
   width: 75%;
@@ -55,9 +79,9 @@ img {
   text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.4);
 }
 .input-group {
+  display: flex;
   margin: auto;
   width: 75%;
-  display: flex;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
 }
 .input-group__text-field {
@@ -75,32 +99,32 @@ img {
   text-align: center;
 }
 .locker-code__text {
-  font-family: monospace;
-  font-size: 8rem;
-  padding: .1em .3em;
   margin: 0;
-  background-color: rgba(0, 0, 0, 0.8);
+  padding: .1em .3em;
   border-radius: 4px;
+  background-color: rgba(0, 0, 0, 0.8);
+  font-size: 8rem;
+  font-family: monospace;
 }
 
 #section-dashboard {
-  font-size: 18px;
-  z-index: 5000;
   position: fixed;
-  color: #212121;
-  padding-left: 70px;
   top: 0;
-  left: 0;
   bottom: 0;
+  left: 0;
+  z-index: 5000;
+  padding-left: 70px;
   width: 100%;
   background-color: #fff;
+  color: #212121;
+  font-size: 18px;
 }
 
 #dashboard-trigger {
-  z-index: 6000;
   position: fixed;
   top: 0;
   left: 0;
+  z-index: 6000;
   width: 60px;
   height: 60px;
   background-color: rgba(0, 0, 0, 0.2);

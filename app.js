@@ -1,5 +1,5 @@
-var standardCodes = ['LKR103', 'LKR104', 'LKR105', 'LKR106', 'LKR107', 'LKR108', 'LKR109', 'LKR110', 'LKR111', 'LKR112', 'LKR113', 'LKR114', 'LKR115', 'LKR116'];
-var premiumCodes = ['special', 'special'];
+var standardCodes = ['LKR101', 'LKR102', 'LKR103', 'LKR104', 'LKR105', 'LKR106', 'LKR107', 'LKR108', 'LKR109', 'LKR110', 'LKR111', 'LKR112', 'LKR113', 'LKR114'];
+var premiumCodes = ['LKR115', 'LKR116'];
 // store of currently available codes
 var codePool = [];
 /* Time at which a new set of premiumCodes will be added to the
@@ -16,7 +16,8 @@ var dashboard = document.getElementById('section-dashboard')
 
 // UI Elements
 var codeDismissBtn = document.getElementById('code-dismiss-btn');
-var dashBtn = document.getElementById('dashboard-trigger');
+var toggleFullscreen = document.getElementById('fullscreen-toggle');
+var toggleAdmin = document.getElementById('admin-toggle');
 var form = document.getElementById('locker-code-form');
 
 // Dynamic Outputs
@@ -43,7 +44,7 @@ codeDismissBtn.addEventListener('click', function () {
   welcomeScreen.classList.remove('hidden');
 });
 
-dashBtn.addEventListener('click', function () {
+toggleAdmin.addEventListener('click', function () {
   dashboard.classList.toggle('hidden');
 });
 
@@ -95,8 +96,7 @@ function exitFullscreen() {
   }
 }
 
-var fsBtn = document.getElementById('fs');
-fsBtn.addEventListener('click', function () {
+toggleFullscreen.addEventListener('click', function () {
   launchIntoFullscreen(document.getElementById('container'));
 })
 var efsBtn = document.getElementById('efs');
