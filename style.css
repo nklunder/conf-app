@@ -27,21 +27,21 @@ img {
 }
 
 .app-controls {
-  z-index: 10000;
   position: absolute;
   top: 0;
   right: 0;
+  z-index: 10000;
 }
 .app-controls__toggle-btn {
-  background-color: rgba(0, 0, 0, 0.2);
-  border-radius: 4px 0 0 4px;
   margin: .25em;
   margin-right: 0;
-  height: 60px;
   width: 60px;
+  height: 60px;
+  border-radius: 4px 0 0 4px;
+  background-color: rgba(0, 0, 0, 0.2);
   background-position: center;
-  background-repeat: no-repeat;
   background-size: 38px;
+  background-repeat: no-repeat;
 }
 #fullscreen-toggle {
   background-image: url('img/fullscreen-enter.png');
@@ -52,6 +52,9 @@ img {
 }
 #admin-toggle {
   background-image: url('img/admin-panel.png');
+}
+#admin-toggle.admin-panel-open {
+  background-image: url('img/close.png');
 }
 
 .btn {
@@ -82,15 +85,15 @@ img {
   text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.4);
 }
 .welcome-text__intro {
-  font-size: 2.6rem;
   margin-top: 4.2rem;
   margin-bottom: 2rem;
+  font-size: 2.6rem;
 }
 .welcome-text__coming-soon {
+  margin: 0;
   color: #e3f2fc;
   font-weight: bold;
   font-style: italic;
-  margin: 0;
   font-size: 4rem;
 }
 .input-group {
@@ -122,16 +125,16 @@ img {
   font-family: monospace;
 }
 
-#section-dashboard {
-  position: fixed;
+#section-admin {
+  position: absolute;
   top: 0;
-  bottom: 0;
   left: 0;
   z-index: 5000;
-  padding-left: 70px;
-  width: 100%;
-  background-color: #fff;
-  color: #212121;
+  overflow: scroll;
+  width: 1024px;
+  height: 600px;
+  background-color: #f4f4f4;
+  color: #242729;
   font-size: 18px;
 }
 

@@ -13,7 +13,7 @@ var premiumCodeRefreshTime = null;
 var appShell = document.getElementById('shell');
 var welcomeScreen = document.getElementById('section-welcome');
 var codeScreen = document.getElementById('section-locker-code');
-var dashboard = document.getElementById('section-dashboard')
+var adminPanel = document.getElementById('section-admin')
 
 // UI Elements
 var codeDismissBtn = document.getElementById('code-dismiss-btn');
@@ -45,9 +45,7 @@ codeDismissBtn.addEventListener('click', function () {
   welcomeScreen.classList.remove('hidden');
 });
 
-adminBtn.addEventListener('click', function () {
-  dashboard.classList.toggle('hidden');
-});
+adminBtn.addEventListener('click', toggleAdminPanel);
 
 function getLockerCode() {
   var rand = Math.floor(Math.random() * codePool.length);
@@ -92,5 +90,12 @@ function toggleFullscreen() {
     appShell.webkitRequestFullscreen();
   }
 }
+
+function toggleAdminPanel() {
+  adminPanel.classList.toggle('hidden');
+  adminBtn.classList.toggle('admin-panel-open');
+}
+
+
 
 fullscreenBtn.addEventListener('click', toggleFullscreen);
