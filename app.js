@@ -77,3 +77,29 @@ function updateDashboardDisplay(code, email) {
 function updateLocalStorage() {
 
 }
+
+
+function launchIntoFullscreen(element) {
+  if(element.requestFullscreen) {
+    element.requestFullscreen();
+  } else if(element.webkitRequestFullscreen) {
+    element.webkitRequestFullscreen();
+  }
+}
+
+function exitFullscreen() {
+  if(document.exitFullscreen) {
+    document.exitFullscreen();
+  } else if(document.mozCancelFullScreen) {
+    document.webkitExitFullscreen();
+  }
+}
+
+var fsBtn = document.getElementById('fs');
+fsBtn.addEventListener('click', function () {
+  launchIntoFullscreen(document.getElementById('container'));
+})
+var efsBtn = document.getElementById('efs');
+efsBtn.addEventListener('click', function () {
+  exitFullscreen();
+})
