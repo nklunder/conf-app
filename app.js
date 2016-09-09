@@ -70,7 +70,8 @@ function refreshLockerCodes() {
 }
 
 function updateDashboardDisplay(code, email) {
-  codeHistory.unshift({ code: code, email: email });
+  // codeHistory.unshift({ code: code, email: email });
+  codeHistory.unshift(email);
   console.log(JSON.stringify(codeHistory));
 }
 
@@ -96,6 +97,12 @@ function toggleAdminPanel() {
   adminBtn.classList.toggle('admin-panel-open');
 }
 
-
-
 fullscreenBtn.addEventListener('click', toggleFullscreen);
+
+
+var mailBtn = document.getElementById('mailtest');
+mailBtn.addEventListener('click', function (e) {
+  var emailBody = codeHistory.join('%0D');
+  e.target.href = "mailto:?subject=Trade%20In%20Emails&body=" + emailBody;
+  console.log(e.target.href);
+})
