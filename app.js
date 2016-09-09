@@ -81,21 +81,6 @@ function updateLocalStorage() {
 }
 
 
-function launchIntoFullscreen(element) {
-  if(element.requestFullscreen) {
-    element.requestFullscreen();
-  } else if(element.webkitRequestFullscreen) {
-    element.webkitRequestFullscreen();
-  }
-}
-
-function exitFullscreen() {
-  if(document.exitFullscreen) {
-    document.exitFullscreen();
-  } else if(document.webkitExitFullscreen) {
-  }
-}
-
 function toggleFullscreen() {
   if (document.webkitFullscreenElement) {
     fullscreenBtn.classList.remove('fullscreen-active');
