@@ -31,12 +31,12 @@ img {
   padding: .25em .5em;
   border-width: 0;
   border-radius: 4px;
-  background-color: #fda500;
+  background-color: #fcad19;
   color: #111;
 }
 .btn:hover,
 .btn:active {
-  background-color: #e49500;
+  background-color: #e39b17;
 }
 .btn--input-right {
   border-radius: 0 4px 4px 0;
@@ -44,14 +44,14 @@ img {
 }
 .header {
   text-align: center;
-  margin-bottom: 2.4rem;
+  margin-bottom: 2.6rem;
 }
 .header__logo {
   width: 75%;
 }
 
 .intro-text {
-  margin-top: 1.5em;
+  margin-top: 4rem;
   text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.4);
 }
 .input-group {
