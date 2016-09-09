@@ -45,7 +45,7 @@ codeDismissBtn.addEventListener('click', function () {
   welcomeScreen.classList.remove('hidden');
 });
 
-toggleAdmin.addEventListener('click', function () {
+adminBtn.addEventListener('click', function () {
   dashboard.classList.toggle('hidden');
 });
 
