@@ -14,15 +14,15 @@ form.addEventListener('submit', function (evt) {
   var email = evt.target.emailAddress.value;
   console.log(email);
 
-  welcomeScreen.style.display = 'none';
-  codeScreen.style.display = 'block';
+  codeScreen.classList.remove('hidden');
+  welcomeScreen.classList.add('hidden');
 });
 
 codeDismissBtn.addEventListener('click', function () {
-  codeScreen.style.display = 'none';
-  welcomeScreen.style.display = 'block';
+  codeScreen.classList.add('hidden');
+  welcomeScreen.classList.remove('hidden');
 });
 
 dashBtn.addEventListener('click', function () {
-  dashboard.style.display = 'block';
+  dashboard.classList.toggle('hidden');
 });

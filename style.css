@@ -10,20 +10,17 @@ body {
   background-size: cover;*/
   background-color: #555;
   color: #fff;
-  font-size: 28px;
+  font-size: 26px;
 }
 
 img {
   max-width: 100%;
 }
-#dashboard-trigger {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 60px;
-  height: 60px;
-  background-color: rgba(0, 0, 0, 0.2);
+
+.hidden {
+  display: none !important;
 }
+
 .container {
   margin: 0 auto;
   width: 900px;
@@ -50,7 +47,7 @@ img {
   margin-bottom: 1rem;
 }
 .header__logo {
-  width: 600px;
+  width: 75%;
 }
 
 .intro-text {
@@ -58,7 +55,8 @@ img {
   text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.5);
 }
 .input-group {
-  padding: 0 2em;
+  margin: auto;
+  width: 75%;
   display: flex;
   box-shadow: 0 0 2px rgba(0, 0, 0, 0.3);
 }
@@ -84,4 +82,27 @@ img {
   margin: 0;
   background-color: rgba(0, 0, 0, 0.9);
   border-radius: 4px;
+}
+
+#section-dashboard {
+  font-size: 18px;
+  z-index: 5000;
+  position: fixed;
+  color: #212121;
+  padding-left: 70px;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  background-color: #fff;
+}
+
+#dashboard-trigger {
+  z-index: 6000;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 60px;
+  height: 60px;
+  background-color: rgba(0, 0, 0, 0.2);
 }
