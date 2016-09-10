@@ -75,6 +75,8 @@ form.addEventListener('submit', function (evt) {
   welcomeScreen.classList.add('hidden');
   codeScreen.classList.remove('hidden');
 
+  evt.target.emailAddress.value = '';
+
   updateAdminPanel();
 });
 
