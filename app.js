@@ -9,24 +9,57 @@ var codeDismissBtn = document.getElementById('code-dismiss-btn');
 var fullscreenBtn = document.getElementById('fullscreen-toggle');
 var adminBtn = document.getElementById('admin-toggle');
 var sendMailBtn = document.getElementById('send-mail-btn');
-var clearStorageBtn = document.getElementById('clear-storage-btn');
+var wipeDataBtn = document.getElementById('clear-storage-btn');
 var form = document.getElementById('locker-code-form');
 
 // UI Outputs
 var currentCode = document.getElementById('locker-code');
-var emailsArray = JSON.parse(localStorage.getItem('emails')) || [];
 
+// Persistent Data
+var data = (function () {
+  var lsGet = localStorage.getItem;
+  var lsGet = localStorage.setItem;
+  /* Time at which a new set of premiumCodes will be added to the
+   * codePool array. Delay is set inside of locker.refillPremiumCodes
+   */
+  var premiumRefillTime = Date.parse(lsGet('refillTime')) || new Date();
+  var emailsArray = JSON.parse(lsGet('emails')) || [];
+
+  return {
+    getEmails: function () {
+      return emailsArray;
+    },
+
+    addEmail: function (emailAddress) {
+      emailsArray.push(emailAddress);
+      lsSet('emails', emailsArray);
+    },
+
+    getRefreshTime: function () {
+      return premiumRefillTime;
+    },
+
+    updateRefreshTime: function (delay) {
+      delay = delay || 60;
+      premiumRefillTime = new Date();
+      premiumRefillTime.setMinutes( new Date().getMinutes() + delay);
+      lsSet('refillTime', JSON.stringify(premiumRefillTime));
+    },
+
+    resetAll: function () {
+      localStorage.clear();
+      emailsArray = [];
+      premiumRefillTime = null;
+    }
+  }
+}());
 
 var locker = (function () {
   var standardCodes = ['LKR101', 'LKR102', 'LKR103', 'LKR104', 'LKR105', 'LKR106', 'LKR107', 'LKR108', 'LKR109', 'LKR110', 'LKR111', 'LKR112', 'LKR113', 'LKR114'];
   var premiumCodes = ['LKR115', 'LKR116'];
   // store of currently available codes
   var codePool = [];
-  /* Time at which a new set of premiumCodes will be added to the
-  * codePool array. Interval is set inside of refillPremiumCodes
-  */
-  var premiumRefillTime =
-    Date.parse(localStorage.getItem('refillTime')) || new Date();
+
 
   return {
     getRandom: function () {
@@ -45,10 +78,7 @@ var locker = (function () {
 
     refillPremiumCodes: function () {
       codePool = codePool.concat(premiumCodes);
-      premiumRefillTime = new Date();
-      premiumRefillTime.setHours( new Date().getHours() + 1);
-
-      localStorage.setItem('refillTime', JSON.stringify(premiumRefillTime));
+      data.updateRefreshTime()
     },
 
     getPremiumRefillTime: function () {
@@ -61,34 +91,9 @@ var locker = (function () {
   };
 }());
 
-form.addEventListener('submit', function (evt) {
-  evt.preventDefault();
-
-  var email = evt.target.emailAddress.value;
-  var code = locker.getRandom();
-
-  currentCode.textContent = code;
-
-  emailsArray.push(email);
-  localStorage.setItem('emails', JSON.stringify(emailsArray));
-
-  welcomeScreen.classList.add('hidden');
-  codeScreen.classList.remove('hidden');
-
-  evt.target.emailAddress.value = '';
-
-  updateAdminPanel();
-});
-
-codeDismissBtn.addEventListener('click', function () {
-  codeScreen.classList.add('hidden');
-  welcomeScreen.classList.remove('hidden');
-});
-
+form.addEventListener('submit', formHandler);
 adminBtn.addEventListener('click', toggleAdminPanel);
-
-clearStorageBtn.addEventListener('click', clearData);
-
+wipeDataBtn.addEventListener('click', wipeData);
 fullscreenBtn.addEventListener('click', toggleFullscreen);
 
 sendMailBtn.addEventListener('click', function (e) {
@@ -96,7 +101,30 @@ sendMailBtn.addEventListener('click', function (e) {
   e.target.href = "mailto:?subject=Trade%20In%20Emails&body=" + emailBody;
 })
 
-function updateAdminPanel() {
+codeDismissBtn.addEventListener('click', function () {
+  codeScreen.classList.add('hidden');
+  welcomeScreen.classList.remove('hidden');
+});
+
+function formHandler(evt) {
+  evt.preventDefault();
+
+  var email = evt.target.emailAddress.value;
+  var code = locker.getRandom();
+
+  currentCode.textContent = code;
+
+  data.addEmail(email);
+
+  welcomeScreen.classList.add('hidden');
+  codeScreen.classList.remove('hidden');
+
+  evt.target.emailAddress.value = '';
+
+  refreshAdminDisplay();
+}
+
+function refreshAdminDisplay() {
   var output = document.getElementById('email-test');
 
   output.textContent = emailsArray.join(' ');
@@ -114,21 +142,21 @@ function toggleFullscreen() {
 }
 
 function toggleAdminPanel() {
+  // only refresh data on admin panel open
+  if (adminPanel.classList.contains('hidden')) {
+    refreshAdminDisplay();
+  }
+
   fullscreenBtn.classList.toggle('hidden');
   adminPanel.classList.toggle('hidden');
   adminBtn.classList.toggle('admin-panel-open');
 }
 
-function clearData() {
-  var confirmDelete = confirm('Are you sure you want to permanently delete the stored data?');
+function wipeData() {
+  var confirmed = confirm('Are you sure you want to permanently delete the stored data?');
 
-  if (confirmDelete) {
-    localStorage.clear();
-    emailsArray = [];
-    premiumRefillTime = null;
-
-    updateAdminPanel();
+  if (confirmed) {
+    data.resetAll();
+    refreshAdminDisplay();
   }
 }
-
-updateAdminPanel();
