@@ -27,7 +27,7 @@ body {
   z-index: 10000;
 }
 .app-controls__toggle-btn {
-  margin: .25em;
+  margin: .3em;
   margin-right: 0;
   width: 60px;
   height: 60px;
@@ -42,7 +42,7 @@ body {
 }
 #fullscreen-toggle.fullscreen-active {
   background-image: url('img/fullscreen-exit.png');
-  opacity: .3;
+  opacity: .25;
 }
 #admin-toggle {
   background-image: url('img/admin-panel.png');
@@ -52,13 +52,17 @@ body {
 }
 
 .btn {
+  display: inline-block;
   padding: .25em .5em;
-  text-decoration: none;
   border-width: 0;
   border-radius: 4px;
   background-color: #fcaf1e;
   color: #111;
-  font-size: 1rem;
+  vertical-align: middle;
+  text-align: center;
+  text-decoration: none;
+  font-size: 2rem;
+  line-height: 1.25;
 }
 .btn:hover,
 .btn:active {
@@ -112,21 +116,21 @@ body {
 }
 .btn--input-right {
   border-radius: 0 4px 4px 0;
-  font-size: 2rem;
 }
 
 
 /* Locker Code Screen */
 
+#section-locker-code { text-align: center; }
 .locker-code {
-  text-align: center;
+  margin: 5rem 0 3rem;
 }
 .locker-code__text {
   margin: 0;
   padding: .1em .3em;
   border-radius: 4px;
   background-color: rgba(0, 0, 0, 0.8);
-  font-size: 8rem;
+  font-size: 9rem;
   font-family: monospace;
 }
 
@@ -134,15 +138,24 @@ body {
 /* admin screen */
 
 #section-admin {
-  padding: 3rem;
   position: absolute;
   top: 0;
   left: 0;
   z-index: 5000;
   overflow: scroll;
+  padding: 3rem;
   width: 1024px;
   height: 600px;
   background-color: #f4f4f4;
   color: #242729;
   font-size: 18px;
+}
+
+.btn--warning {
+  background-color: #d9534f;
+  color: #fff;
+}
+.btn--warning:hover,
+.btn--warning:active {
+  background-color: #c9302c;
 }
