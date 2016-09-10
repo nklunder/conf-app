@@ -106,7 +106,7 @@ adminBtn.addEventListener('click', toggleAdminPanel);
 wipeDataBtn.addEventListener('click', wipeData);
 fullscreenBtn.addEventListener('click', toggleFullscreen);
 refillCodesBtn.addEventListener('click', function () {
-  locker.refillPremiumCodes();
+  locker.refillAllCodes();
   refreshAdminDisplay();
 });
 sendMailBtn.addEventListener('click', function (e) {
@@ -178,7 +178,7 @@ function wipeData() {
 
   if (confirmed) {
     data.resetAll();
-    refreshAdminDisplay();
+    // refreshAdminDisplay();
   }
 }
 
