@@ -1,14 +1,3 @@
-var standardCodes = ['LKR101', 'LKR102', 'LKR103', 'LKR104', 'LKR105', 'LKR106', 'LKR107', 'LKR108', 'LKR109', 'LKR110', 'LKR111', 'LKR112', 'LKR113', 'LKR114'];
-var premiumCodes = ['LKR115', 'LKR116'];
-// store of currently available codes
-var codePool = [];
-/* Time at which a new set of premiumCodes will be added to the
- * codePool array.
- * Ensures that at least one hour has passed and all current codes
- * in the codePool have been used before new premiumCodes are added.
- */
-var premiumCodeRefreshTime = null;
-
 // App Screens
 var appShell = document.getElementById('shell');
 var welcomeScreen = document.getElementById('section-welcome');
@@ -19,25 +8,74 @@ var adminPanel = document.getElementById('section-admin')
 var codeDismissBtn = document.getElementById('code-dismiss-btn');
 var fullscreenBtn = document.getElementById('fullscreen-toggle');
 var adminBtn = document.getElementById('admin-toggle');
+var sendMailBtn = document.getElementById('send-mail-btn');
+var clearStorageBtn = document.getElementById('clear-storage-btn');
 var form = document.getElementById('locker-code-form');
 
-// Dynamic Outputs
-var currentLockerCode = document.getElementById('locker-code');
-var codeHistory = [];
+// UI Outputs
+var currentCode = document.getElementById('locker-code');
+var emailsArray = JSON.parse(localStorage.getItem('emails')) || [];
 
+
+var locker = (function () {
+  var standardCodes = ['LKR101', 'LKR102', 'LKR103', 'LKR104', 'LKR105', 'LKR106', 'LKR107', 'LKR108', 'LKR109', 'LKR110', 'LKR111', 'LKR112', 'LKR113', 'LKR114'];
+  var premiumCodes = ['LKR115', 'LKR116'];
+  // store of currently available codes
+  var codePool = [];
+  /* Time at which a new set of premiumCodes will be added to the
+  * codePool array. Interval is set inside of refillPremiumCodes
+  */
+  var premiumRefillTime =
+    Date.parse(localStorage.getItem('refillTime')) || new Date();
+
+  return {
+    getRandom: function () {
+      if (codePool.length === 0) { this.refillCodes(); }
+      var rand = Math.floor(Math.random() * codePool.length);
+      return codePool.splice(rand, 1)[0];
+    },
+
+    refillCodes: function () {
+      var currentTime = new Date();
+      codePool = standardCodes.slice();
+      if (currentTime > premiumRefillTime) {
+        this.refillPremiumCodes();
+      }
+    },
+
+    refillPremiumCodes: function () {
+      codePool = codePool.concat(premiumCodes);
+      premiumRefillTime = new Date();
+      premiumRefillTime.setHours( new Date().getHours() + 1);
+
+      localStorage.setItem('refillTime', JSON.stringify(premiumRefillTime));
+    },
+
+    getPremiumRefillTime: function () {
+      return premiumRefillTime;
+    },
+
+    getPremiumRefillTimeLeft: function () {
+
+    }
+  };
+}());
 
 form.addEventListener('submit', function (evt) {
   evt.preventDefault();
 
   var email = evt.target.emailAddress.value;
-  var code = getLockerCode();
+  var code = locker.getRandom();
 
-  currentLockerCode.textContent = code;
-  updateLocalStorage();
-  updateDashboardDisplay(code, email);
+  currentCode.textContent = code;
 
-  codeScreen.classList.remove('hidden');
+  emailsArray.push(email);
+  localStorage.setItem('emails', JSON.stringify(emailsArray));
+
   welcomeScreen.classList.add('hidden');
+  codeScreen.classList.remove('hidden');
+
+  updateAdminPanel();
 });
 
 codeDismissBtn.addEventListener('click', function () {
@@ -47,40 +85,20 @@ codeDismissBtn.addEventListener('click', function () {
 
 adminBtn.addEventListener('click', toggleAdminPanel);
 
-function getLockerCode() {
-  var rand;
-  
-  if (codePool.length === 0) {
-    refreshLockerCodes();
-  }
+clearStorageBtn.addEventListener('click', clearData);
 
-  rand = Math.floor(Math.random() * codePool.length);
+fullscreenBtn.addEventListener('click', toggleFullscreen);
 
-  return codePool.splice(rand, 1)[0];
+sendMailBtn.addEventListener('click', function (e) {
+  var emailBody = emailsArray.join('%0D%0A');
+  e.target.href = "mailto:?subject=Trade%20In%20Emails&body=" + emailBody;
+})
+
+function updateAdminPanel() {
+  var output = document.getElementById('email-test');
+
+  output.textContent = emailsArray.join(' ');
 }
-
-function refreshLockerCodes() {
-  var currentTime = new Date();
-
-  codePool = standardCodes.slice();
-
-  if (currentTime > premiumCodeRefreshTime) {
-    codePool = codePool.concat(premiumCodes);
-    premiumCodeRefreshTime = new Date( currentTime );
-    premiumCodeRefreshTime.setHours( currentTime.getHours() + 1);
-  }
-}
-
-function updateDashboardDisplay(code, email) {
-  // codeHistory.unshift({ code: code, email: email });
-  codeHistory.unshift(email);
-  console.log(JSON.stringify(codeHistory));
-}
-
-function updateLocalStorage() {
-
-}
-
 
 function toggleFullscreen() {
   fullscreenBtn.classList.toggle('fullscreen-active');
@@ -99,12 +117,16 @@ function toggleAdminPanel() {
   adminBtn.classList.toggle('admin-panel-open');
 }
 
-fullscreenBtn.addEventListener('click', toggleFullscreen);
+function clearData() {
+  var confirmDelete = confirm('Are you sure you want to permanently delete the stored data?');
 
+  if (confirmDelete) {
+    localStorage.clear();
+    emailsArray = [];
+    premiumRefillTime = null;
 
-var mailBtn = document.getElementById('mailtest');
-mailBtn.addEventListener('click', function (e) {
-  var emailBody = codeHistory.join('%0D');
-  e.target.href = "mailto:?subject=Trade%20In%20Emails&body=" + emailBody;
-  console.log(e.target.href);
-})
+    updateAdminPanel();
+  }
+}
+
+updateAdminPanel();

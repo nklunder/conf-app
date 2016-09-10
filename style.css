@@ -1,19 +1,13 @@
-* {
-  box-sizing: border-box;
-}
+/* global styles */
+
+* { box-sizing: border-box }
+img { max-width: 100%; }
+.hidden { display: none !important; }
 
 body {
   margin: 0;
   color: #fff;
   font-family: Arial, sans-serif;
-}
-
-img {
-  max-width: 100%;
-}
-
-.hidden {
-  display: none !important;
 }
 
 .fullscreen-container {
@@ -59,6 +53,7 @@ img {
 
 .btn {
   padding: .25em .5em;
+  text-decoration: none;
   border-width: 0;
   border-radius: 4px;
   background-color: #fcaf1e;
@@ -69,10 +64,7 @@ img {
 .btn:active {
   background-color: #e39d1b;
 }
-.btn--input-right {
-  border-radius: 0 4px 4px 0;
-  font-size: 2rem;
-}
+
 .header {
   margin-bottom: 3rem;
   text-align: center;
@@ -80,6 +72,10 @@ img {
 .header__logo {
   width: 75%;
 }
+
+
+/* welcome screen */
+
 .welcome-text {
   text-align: center;
   text-shadow: 1px 2px 1px rgba(0, 0, 0, 0.4);
@@ -96,6 +92,7 @@ img {
   font-style: italic;
   font-size: 4rem;
 }
+
 .input-group {
   display: flex;
   margin: auto;
@@ -113,6 +110,14 @@ img {
   outline: 0;
   box-shadow: none;
 }
+.btn--input-right {
+  border-radius: 0 4px 4px 0;
+  font-size: 2rem;
+}
+
+
+/* Locker Code Screen */
+
 .locker-code {
   text-align: center;
 }
@@ -125,7 +130,11 @@ img {
   font-family: monospace;
 }
 
+
+/* admin screen */
+
 #section-admin {
+  padding: 3rem;
   position: absolute;
   top: 0;
   left: 0;
@@ -136,14 +145,4 @@ img {
   background-color: #f4f4f4;
   color: #242729;
   font-size: 18px;
-}
-
-#dashboard-trigger {
-  position: fixed;
-  top: 0;
-  left: 0;
-  z-index: 6000;
-  width: 60px;
-  height: 60px;
-  background-color: rgba(0, 0, 0, 0.2);
 }
