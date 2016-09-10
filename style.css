@@ -10,6 +10,23 @@ body {
   font-family: Arial, sans-serif;
 }
 
+h2 {
+  font-size: 2rem;
+  margin: 3rem 0 1rem;
+}
+
+.subhead {
+  font-size: .7em;
+  font-weight: 400;
+  color: #999;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  font-size: 1.4rem;
+}
+
 .fullscreen-container {
   position: relative;
   padding: 3rem;
@@ -123,7 +140,7 @@ body {
 
 #section-locker-code { text-align: center; }
 .locker-code {
-  margin: 5rem 0 3rem;
+  margin: 4rem 0 3rem;
 }
 .locker-code__text {
   margin: 0;
@@ -144,6 +161,7 @@ body {
   z-index: 5000;
   overflow: scroll;
   padding: 3rem;
+  padding-top: 0;
   width: 1024px;
   height: 600px;
   background-color: #f4f4f4;
@@ -154,6 +172,7 @@ body {
 .btn--warning {
   background-color: #d9534f;
   color: #fff;
+  margin: 3rem 0;
 }
 .btn--warning:hover,
 .btn--warning:active {

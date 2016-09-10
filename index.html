@@ -41,9 +41,18 @@
     <!-- end locker code section -->
 
     <div id="section-admin" class="hidden">
-      <a class="btn" href="mailto:" id="send-mail-btn">Send Address-list by email</a>
-      <button id="clear-storage-btn" class="btn btn--warning">Clear data</button>
-      <p id="email-test"></p>
+      <h2>Premium code refresh <span class="subhead" id="time-until-refresh"></span></h2>
+      <button id="refill-codes-btn" class="btn">Refill locker codes now</button>
+
+      <h2>Address list <span class="subhead" id="total-emails"></span></h2>
+      <a class="btn" href="mailto:" id="send-mail-btn">Export list via email</a>
+      <ul id="stored-emails">
+      </ul>
+
+      <button id="clear-storage-btn" class="btn btn--warning">Clear all data</button>
+
+
+
     </div>
     <!-- end admin area -->
 

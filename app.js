@@ -5,22 +5,31 @@ var codeScreen = document.getElementById('section-locker-code');
 var adminPanel = document.getElementById('section-admin')
 
 // UI Elements
-var codeDismissBtn = document.getElementById('code-dismiss-btn');
-var fullscreenBtn = document.getElementById('fullscreen-toggle');
-var adminBtn = document.getElementById('admin-toggle');
-var sendMailBtn = document.getElementById('send-mail-btn');
-var wipeDataBtn = document.getElementById('clear-storage-btn');
-var form = document.getElementById('locker-code-form');
+  // global
+  var adminBtn = document.getElementById('admin-toggle');
+  var fullscreenBtn = document.getElementById('fullscreen-toggle');
+  // welcome screen
+  var form = document.getElementById('locker-code-form');
+  // locker code screen
+  var codeDismissBtn = document.getElementById('code-dismiss-btn');
+  // admin panel
+  var sendMailBtn = document.getElementById('send-mail-btn');
+  var refillCodesBtn = document.getElementById('refill-codes-btn');
+  var wipeDataBtn = document.getElementById('clear-storage-btn');
 
 // UI Outputs
-var currentCode = document.getElementById('locker-code');
+  // locker code screen
+  var currentCode = document.getElementById('locker-code');
+  // admin panel
+  var timeUntilRefresh = document.getElementById('time-until-refresh');
+  var totalEmails = document.getElementById('total-emails');
 
-// Persistent Data
+
 var data = (function () {
   /* Time at which a new set of premiumCodes will be added to the
    * codePool array. Delay is set inside of locker.refillPremiumCodes
    */
-  var premiumRefillTime = Date.parse(localStorage.getItem('refillTime')) || new Date();
+  var premiumRefreshTime = verifyDate(localStorage.getItem('refillTime')) || new Date();
   var emailsArray = JSON.parse(localStorage.getItem('emails')) || [];
 
   return {
@@ -33,21 +42,24 @@ var data = (function () {
       localStorage.setItem('emails', JSON.stringify(emailsArray));
     },
 
-    getRefreshTime: function () {
-      return premiumRefillTime;
+    getPremiumRefreshTime: function () {
+      return premiumRefreshTime;
     },
 
-    updateRefreshTime: function (delay) {
-      delay = delay || 60;
-      premiumRefillTime = new Date();
-      premiumRefillTime.setMinutes( new Date().getMinutes() + delay);
-      localStorage.setItem('refillTime', JSON.stringify(premiumRefillTime));
+    getTimeUntilRefresh: function () {
+      return Math.floor(((premiumRefreshTime.getTime() - Date.now()) / 1000) / 60);
+    },
+
+    updateRefreshTime: function () {
+      premiumRefreshTime = new Date();
+      premiumRefreshTime.setHours(premiumRefreshTime.getHours() + 1);
+      localStorage.setItem('refillTime', premiumRefreshTime);
     },
 
     resetAll: function () {
       localStorage.clear();
       emailsArray = [];
-      premiumRefillTime = null;
+      premiumRefreshTime = null;
     }
   }
 }());
@@ -61,16 +73,17 @@ var locker = (function () {
 
   return {
     getRandom: function () {
-      if (codePool.length === 0) { this.refillCodes(); }
+      if (codePool.length === 0) { this.refillStandardCodes(); }
       var rand = Math.floor(Math.random() * codePool.length);
       return codePool.splice(rand, 1)[0];
     },
 
-    refillCodes: function () {
-      var currentTime = new Date();
-      var refreshTime = data.getRefreshTime()
+    refillStandardCodes: function () {
+      var currentTime = new Date().getTime();
+      var refreshTime = data.getPremiumRefreshTime().getTime();
 
       codePool = standardCodes.slice();
+
       if (currentTime > refreshTime) {
         this.refillPremiumCodes();
       }
@@ -81,12 +94,9 @@ var locker = (function () {
       data.updateRefreshTime()
     },
 
-    getPremiumRefillTime: function () {
-      return premiumRefillTime;
-    },
-
-    getPremiumRefillTimeLeft: function () {
-
+    refillAllCodes: function () {
+      this.refillStandardCodes();
+      this.refillPremiumCodes();
     }
   };
 }());
@@ -95,12 +105,14 @@ form.addEventListener('submit', formHandler);
 adminBtn.addEventListener('click', toggleAdminPanel);
 wipeDataBtn.addEventListener('click', wipeData);
 fullscreenBtn.addEventListener('click', toggleFullscreen);
-
+refillCodesBtn.addEventListener('click', function () {
+  locker.refillPremiumCodes;
+  refreshAdminDisplay();
+});
 sendMailBtn.addEventListener('click', function (e) {
   var emailBody = emailsArray.join('%0D%0A');
-  e.target.href = "mailto:?subject=Trade%20In%20Emails&body=" + emailBody;
+  e.target.href = 'mailto:?subject=Trade%20In%20Emails&body=' + emailBody;
 })
-
 codeDismissBtn.addEventListener('click', function () {
   codeScreen.classList.add('hidden');
   welcomeScreen.classList.remove('hidden');
@@ -114,7 +126,10 @@ function formHandler(evt) {
 
   currentCode.textContent = code;
 
-  data.addEmail(email);
+  // only update emails array if address was entered
+  if (email) {
+    data.addEmail(email);
+  }
 
   welcomeScreen.classList.add('hidden');
   codeScreen.classList.remove('hidden');
@@ -125,9 +140,15 @@ function formHandler(evt) {
 }
 
 function refreshAdminDisplay() {
-  var output = document.getElementById('email-test');
+  var emailList = document.getElementById('stored-emails');
+  var emailArray = data.getEmails();
+  var listHTML = emailArray.map(function(email) {
+    return '<li>' + email + '</li>';
+  }).join('');
 
-  output.textContent = data.getEmails().join(' ');
+  timeUntilRefresh.textContent = 'in ' + data.getTimeUntilRefresh() + ' minutes';
+  totalEmails.textContent = 'total: ' + emailArray.length;
+  emailList.innerHTML = listHTML;
 }
 
 function toggleFullscreen() {
@@ -159,4 +180,14 @@ function wipeData() {
     data.resetAll();
     refreshAdminDisplay();
   }
+}
+
+function verifyDate(storedDate) {
+  var time = Date.parse(storedDate)
+
+  if (!isNaN(time)) {
+    return new Date(time);
+  }
+
+  return false;
 }
