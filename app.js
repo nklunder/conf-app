@@ -174,13 +174,12 @@ function toggleAdminPanel() {
 }
 
 function wipeData() {
-  alert('just a test');
-  // var confirmed = confirm('Are you sure you want to permanently delete the stored data?');
-  //
-  // if (confirmed) {
-  //   data.resetAll();
-  //   refreshAdminDisplay();
-  // }
+  var confirmation = prompt('Are you sure you want to permanently delete the stored data?');
+
+  if (confirmation === 'del') {
+    data.resetAll();
+    refreshAdminDisplay();
+  }
 }
 
 function verifyDate(storedDate) {
