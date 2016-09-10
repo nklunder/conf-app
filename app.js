@@ -48,11 +48,13 @@ codeDismissBtn.addEventListener('click', function () {
 adminBtn.addEventListener('click', toggleAdminPanel);
 
 function getLockerCode() {
-  var rand = Math.floor(Math.random() * codePool.length);
-
+  var rand;
+  
   if (codePool.length === 0) {
     refreshLockerCodes();
   }
+
+  rand = Math.floor(Math.random() * codePool.length);
 
   return codePool.splice(rand, 1)[0];
 }
