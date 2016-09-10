@@ -59,7 +59,6 @@ var data = (function () {
     resetAll: function () {
       localStorage.clear();
       emailsArray = [];
-      premiumRefreshTime = null;
     }
   }
 }());
@@ -174,8 +173,12 @@ function toggleAdminPanel() {
 }
 
 function wipeData() {
+  var confirmed = confirm('Are you sure you want to permanently delete the stored data?');
+
+  if (confirmed) {
     data.resetAll();
     refreshAdminDisplay();
+  }
 }
 
 function verifyDate(storedDate) {
