@@ -17,13 +17,11 @@ var currentCode = document.getElementById('locker-code');
 
 // Persistent Data
 var data = (function () {
-  var lsGet = localStorage.getItem;
-  var lsGet = localStorage.setItem;
   /* Time at which a new set of premiumCodes will be added to the
    * codePool array. Delay is set inside of locker.refillPremiumCodes
    */
-  var premiumRefillTime = Date.parse(lsGet('refillTime')) || new Date();
-  var emailsArray = JSON.parse(lsGet('emails')) || [];
+  var premiumRefillTime = Date.parse(localStorage.getItem('refillTime')) || new Date();
+  var emailsArray = JSON.parse(localStorage.getItem('emails')) || [];
 
   return {
     getEmails: function () {
@@ -32,7 +30,7 @@ var data = (function () {
 
     addEmail: function (emailAddress) {
       emailsArray.push(emailAddress);
-      lsSet('emails', emailsArray);
+      localStorage.setItem('emails', JSON.stringify(emailsArray));
     },
 
     getRefreshTime: function () {
@@ -43,7 +41,7 @@ var data = (function () {
       delay = delay || 60;
       premiumRefillTime = new Date();
       premiumRefillTime.setMinutes( new Date().getMinutes() + delay);
-      lsSet('refillTime', JSON.stringify(premiumRefillTime));
+      localStorage.setItem('refillTime', JSON.stringify(premiumRefillTime));
     },
 
     resetAll: function () {
@@ -70,8 +68,10 @@ var locker = (function () {
 
     refillCodes: function () {
       var currentTime = new Date();
+      var refreshTime = data.getRefreshTime()
+
       codePool = standardCodes.slice();
-      if (currentTime > premiumRefillTime) {
+      if (currentTime > refreshTime) {
         this.refillPremiumCodes();
       }
     },
@@ -121,13 +121,13 @@ function formHandler(evt) {
 
   evt.target.emailAddress.value = '';
 
-  refreshAdminDisplay();
+  // refreshAdminDisplay();
 }
 
 function refreshAdminDisplay() {
   var output = document.getElementById('email-test');
 
-  output.textContent = emailsArray.join(' ');
+  output.textContent = data.getEmails().join(' ');
 }
 
 function toggleFullscreen() {
