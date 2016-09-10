@@ -174,12 +174,8 @@ function toggleAdminPanel() {
 }
 
 function wipeData() {
-  var confirmation = prompt('Are you sure you want to permanently delete the stored data?');
-
-  if (confirmation === 'del') {
     data.resetAll();
     refreshAdminDisplay();
-  }
 }
 
 function verifyDate(storedDate) {
