@@ -56,7 +56,7 @@ var data = (function () {
       localStorage.setItem('refillTime', premiumRefreshTime);
     },
 
-    resetAll: function () {
+    clearData: function () {
       localStorage.clear();
       emailsArray = [];
     }
@@ -176,7 +176,7 @@ function wipeData() {
   var confirmed = confirm('Are you sure you want to permanently delete the stored data?');
 
   if (confirmed) {
-    data.resetAll();
+    data.clearData();
     refreshAdminDisplay();
   }
 }
