@@ -55,7 +55,6 @@ ul {
   background-repeat: no-repeat;
   transition: background-image .15s, background-color .2s;
 }
-.app-controls__toggle-btn:hover,
 .app-controls__toggle-btn:active {
   background-color: rgba(0, 0, 0, 0.4);
 }
@@ -89,7 +88,6 @@ ul {
   transition-property: background-color, box-shadow;
   transition-duration: .2s;
 }
-.btn:hover,
 .btn:active {
   background-color: #e39d1b;
 }
@@ -189,7 +187,6 @@ ul {
   color: #fff;
   margin: 3rem 0;
 }
-.btn--warning:hover,
 .btn--warning:active {
   background-color: #c9302c;
 }
