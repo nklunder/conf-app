@@ -85,13 +85,18 @@ var locker = (function () {
       codePool = standardCodes.slice();
 
       if (currentTime > refreshTime) {
+
         this.refillPremiumCodes();
       }
     },
 
     refillPremiumCodes: function () {
-      codePool = codePool.concat(premiumCodes);
-      data.updateRefreshTime()
+      /* Add an extra copy of the standard codes with the premium codes.
+       * This is to decrease the probability that premium codes will be
+       * picked too quickly.
+       */
+      codePool = codePool.concat(standardCodes, premiumCodes);
+      data.updateRefreshTime();
     },
 
     refillAllCodes: function () {
