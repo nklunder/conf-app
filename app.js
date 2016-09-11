@@ -8,6 +8,7 @@ var adminPanel = document.getElementById('section-admin')
   // global
   var adminBtn = document.getElementById('admin-toggle');
   var fullscreenBtn = document.getElementById('fullscreen-toggle');
+  var loader = document.getElementById('loader');
   // welcome screen
   var form = document.getElementById('locker-code-form');
   // locker code screen
@@ -101,6 +102,7 @@ var locker = (function () {
 }());
 
 form.addEventListener('submit', formHandler);
+codeDismissBtn.addEventListener('click', transitionToWelcomeScreen);
 adminBtn.addEventListener('click', toggleAdminPanel);
 wipeDataBtn.addEventListener('click', wipeData);
 fullscreenBtn.addEventListener('click', toggleFullscreen);
@@ -112,10 +114,6 @@ sendMailBtn.addEventListener('click', function (e) {
   var emailBody = data.getEmails().join('%0D%0A');
   e.target.href = 'mailto:?subject=Trade%20In%20Emails&body=' + emailBody;
 })
-codeDismissBtn.addEventListener('click', function () {
-  codeScreen.classList.add('hidden');
-  welcomeScreen.classList.remove('hidden');
-});
 
 function formHandler(evt) {
   evt.preventDefault();
@@ -130,12 +128,9 @@ function formHandler(evt) {
     data.addEmail(email);
   }
 
-  welcomeScreen.classList.add('hidden');
-  codeScreen.classList.remove('hidden');
-
   evt.target.emailAddress.value = '';
 
-  // refreshAdminDisplay();
+  transitionToCodeScreen();
 }
 
 function refreshAdminDisplay() {
@@ -159,6 +154,23 @@ function toggleFullscreen() {
   } else {
     appShell.webkitRequestFullscreen();
   }
+}
+
+function transitionToCodeScreen() {
+  loader.classList.remove('hidden');
+  welcomeScreen.classList.add('hidden');
+
+  setTimeout(showCodeScreen, 700);
+
+  function showCodeScreen() {
+    loader.classList.add('hidden');
+    codeScreen.classList.remove('hidden');
+  }
+}
+
+function transitionToWelcomeScreen() {
+  codeScreen.classList.add('hidden');
+  welcomeScreen.classList.remove('hidden');
 }
 
 function toggleAdminPanel() {
