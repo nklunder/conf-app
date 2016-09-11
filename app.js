@@ -28,7 +28,7 @@ var adminPanel = document.getElementById('section-admin')
 
 var data = (function () {
   /* Time at which a new set of premiumCodes will be added to the
-   * codePool array. Delay is set inside of locker.refillPremiumCodes
+   * codePool array. Delay is set inside of updateRefreshTime
    */
   var premiumRefreshTime = verifyDate(localStorage.getItem('refillTime')) || new Date();
   var emailsArray = JSON.parse(localStorage.getItem('emails')) || [];
@@ -73,35 +73,34 @@ var locker = (function () {
 
   return {
     getRandom: function () {
-      if (codePool.length === 0) { this.refillStandardCodes(); }
+      if (codePool.length === 0) { this.refillCodes(); }
       var rand = Math.floor(Math.random() * codePool.length);
       return codePool.splice(rand, 1)[0];
     },
 
-    refillStandardCodes: function () {
+    refillCodes: function () {
       var currentTime = new Date().getTime();
       var refreshTime = data.getPremiumRefreshTime().getTime();
 
-      codePool = standardCodes.slice();
-
       if (currentTime > refreshTime) {
-
-        this.refillPremiumCodes();
+        this.refillAllCodes();
+      } else {
+        this.refillStandardCodes();
       }
     },
 
-    refillPremiumCodes: function () {
+    refillStandardCodes: function () {
+      codePool = standardCodes.slice();
+    },
+
+    refillAllCodes: function () {
       /* Add an extra copy of the standard codes with the premium codes.
        * This is to decrease the probability that premium codes will be
        * picked too quickly.
        */
-      codePool = codePool.concat(standardCodes, premiumCodes);
+      codePool = codePool.concat(standardCodes, standardCodes, premiumCodes);
       data.updateRefreshTime();
-    },
-
-    refillAllCodes: function () {
-      this.refillStandardCodes();
-      this.refillPremiumCodes();
+      console.log(codePool);
     }
   };
 }());
