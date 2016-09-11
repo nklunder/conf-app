@@ -157,10 +157,12 @@ function toggleFullscreen() {
 }
 
 function transitionToCodeScreen() {
+  var loadTime = Math.floor(Math.random() * (700 - 300)) + 300;
+
   loader.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
 
-  setTimeout(showCodeScreen, 700);
+  setTimeout(showCodeScreen, loadTime);
 
   function showCodeScreen() {
     loader.classList.add('hidden');
