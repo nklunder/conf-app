@@ -53,7 +53,7 @@ ul {
   background-position: center;
   background-size: 38px;
   background-repeat: no-repeat;
-  transition: background-image .15s, background-color .15s;
+  transition: background-image .15s;
 }
 .app-controls__toggle-btn:active {
   background-color: rgba(0, 0, 0, 0.4);
