@@ -53,6 +53,11 @@ ul {
   background-position: center;
   background-size: 38px;
   background-repeat: no-repeat;
+  transition: background-image .15s, background-color .2s;
+}
+.app-controls__toggle-btn:hover,
+.app-controls__toggle-btn:active {
+  background-color: rgba(0, 0, 0, 0.4);
 }
 #fullscreen-toggle {
   background-image: url('img/fullscreen-enter.png');
@@ -80,10 +85,19 @@ ul {
   text-decoration: none;
   font-size: 2rem;
   line-height: 1.25;
+  box-shadow: 0 2px 1px rgba(0, 0, 0, 0.25);
+  transition-property: background-color, box-shadow;
+  transition-duration: .2s;
 }
 .btn:hover,
 .btn:active {
   background-color: #e39d1b;
+}
+.btn:active {
+  box-shadow: 0 1px 1px rgba(0, 0, 0, 0.25);
+}
+.btn:focus {
+  outline: none;
 }
 
 .header {
@@ -118,7 +132,7 @@ ul {
   display: flex;
   margin: auto;
   width: 75%;
-  box-shadow: 0 0 2px rgba(0, 0, 0, 0.4);
+  box-shadow: 0 0 2px rgba(0, 0, 0, 0.45);
 }
 .input-group__text-field {
   flex: 1 1 4rem;
@@ -133,6 +147,7 @@ ul {
 }
 .btn--input-right {
   border-radius: 0 4px 4px 0;
+  box-shadow: none;
 }
 
 

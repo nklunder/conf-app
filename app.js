@@ -109,7 +109,7 @@ refillCodesBtn.addEventListener('click', function () {
   refreshAdminDisplay();
 });
 sendMailBtn.addEventListener('click', function (e) {
-  var emailBody = emailsArray.join('%0D%0A');
+  var emailBody = data.getEmails().join('%0D%0A');
   e.target.href = 'mailto:?subject=Trade%20In%20Emails&body=' + emailBody;
 })
 codeDismissBtn.addEventListener('click', function () {
