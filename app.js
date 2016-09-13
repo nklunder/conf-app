@@ -2,6 +2,7 @@
 var appShell = document.getElementById('shell');
 var welcomeScreen = document.getElementById('section-welcome');
 var codeScreen = document.getElementById('section-locker-code');
+var errorScreen = document.getElementById('section-error');
 var adminPanel = document.getElementById('section-admin')
 
 // UI Elements
