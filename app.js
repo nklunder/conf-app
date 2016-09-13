@@ -14,6 +14,7 @@ var adminPanel = document.getElementById('section-admin')
   var form = document.getElementById('locker-code-form');
   // locker code screen
   var codeDismissBtn = document.getElementById('code-dismiss-btn');
+  var errorDismissBtn = document.getElementById('error-dismiss-btn');
   // admin panel
   var sendMailBtn = document.getElementById('send-mail-btn');
   var refillCodesBtn = document.getElementById('refill-codes-btn');
