@@ -180,7 +180,9 @@ ul {
 
 /* Locker Code Screen */
 
-#section-locker-code { text-align: center; }
+#section-locker-code,
+#section-error { text-align: center; }
+
 .locker-code {
   margin: 4rem 0 3rem;
 }

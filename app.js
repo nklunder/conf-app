@@ -109,6 +109,7 @@ var locker = (function () {
 
 form.addEventListener('submit', formHandler);
 codeDismissBtn.addEventListener('click', transitionToWelcomeScreen);
+errorDismissBtn.addEventListener('click', transitionToWelcomeScreen);
 adminBtn.addEventListener('click', toggleAdminPanel);
 wipeDataBtn.addEventListener('click', wipeData);
 fullscreenBtn.addEventListener('click', toggleFullscreen);
