@@ -123,18 +123,19 @@ function formHandler(evt) {
   evt.preventDefault();
 
   var email = evt.target.emailAddress.value;
-  var code = locker.getRandom();
+  var isNewAddress = true;
 
-  currentCode.textContent = code;
-
-  // only update emails array if address was entered
-  if (email) {
+  // only update emails array if address was entered and not already in the list
+  if (email && data.getEmails().indexOf(email) === -1) {
     data.addEmail(email);
+    currentCode.textContent = locker.getRandom();
+  } else {
+    isNewAddress = false;
   }
 
   evt.target.emailAddress.value = '';
 
-  transitionToCodeScreen();
+  transitionToCodeScreen(isNewAddress);
 }
 
 function refreshAdminDisplay() {
@@ -160,21 +161,35 @@ function toggleFullscreen() {
   }
 }
 
-function transitionToCodeScreen() {
+function transitionToCodeScreen(isNewAddress) {
   var loadTime = Math.floor(Math.random() * (700 - 300)) + 300;
+  var nextScreen = undefined;
 
   loader.classList.remove('hidden');
   welcomeScreen.classList.add('hidden');
 
-  setTimeout(showCodeScreen, loadTime);
+  if (isNewAddress) {
+    setTimeout(showCodeScreen, loadTime);
+  } else {
+    setTimeout(showErrorScreen, loadTime);
+  }
+
 
   function showCodeScreen() {
     loader.classList.add('hidden');
     codeScreen.classList.remove('hidden');
   }
+
+  function showErrorScreen() {
+    loader.classList.add('hidden');
+    errorScreen.classList.remove('hidden');
+  }
 }
 
 function transitionToWelcomeScreen() {
+  // clear code value to ensure nothing shows on code screen if invalid address was entered
+  currentCode.textContent = '';
+  errorScreen.classList.add('hidden');
   codeScreen.classList.add('hidden');
   welcomeScreen.classList.remove('hidden');
 }

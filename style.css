@@ -193,6 +193,11 @@ ul {
   font-family: monospace;
 }
 
+.error-text {
+  margin-top: 4.2rem;
+  font-size: 2.6rem;
+}
+
 
 /* admin screen */
 
